@@ -20,6 +20,8 @@ JMP      3    Jumps to the given label (A label is a string of more than 3 chars
 LDA      2    Sets the A register to the value of the next byte.
 LDA      3    Sets the A register to a value in Ram at the given address.
 
+NOP      1    No instruction.
+
 PHA      1    Pushes the value of the A register to the Stack.
 PLA      1    Pulls a value from the Stack and sets to A register to it.
 PRA      1    Prints the value of the A register to the console.
@@ -51,6 +53,8 @@ JMP    ["JMP", *"name of label"*]
 Labels [*"name"*]
 LDA    ["LDA", ("I0x00")]
 LDA    ["LDA", {"A0x0000"}]
+
+NOP    ["NOP"]
 
 PHA    ["PHA"]
 PLA    ["PLA"]
