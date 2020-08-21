@@ -26,6 +26,11 @@ def compil(program):
         elif x[0].lower() == "ext":
             finalProgram.append(f"rom[{makeHex(line, 4)}] = 0x03; // EXT")
             line += 1
+        elif x[0].lower() == "inc":
+            finalProgram.append(f"rom[{makeHex(line, 4)}] = 0xee; // INC {makeHex(int(x[1], 16), 4)}")
+            finalProgram.append(f"rom[{makeHex(line + 1, 4)}] = {prefix + makeHex(int(x[1], 16), 4)[4:]};")
+            finalProgram.append(f"rom[{makeHex(line + 2, 4)}] = {prefix + makeHex(int(x[1], 16), 4)[2:4]};")
+            line += 3
         elif x[0].lower() == "jmp":
             index = 0
             for i in labels:
@@ -45,6 +50,9 @@ def compil(program):
                 finalProgram.append(f"rom[{makeHex(line, 4)}] = 0xa9; // LDA {makeHex(int(x[1][1:], 16), 2)}")
                 finalProgram.append(f"rom[{makeHex(line + 1, 4)}] = {makeHex(int(x[1][1:], 16), 2)};")
                 line += 2
+        elif x[0].lower() == "nop":
+            finalProgram.append(f"rom[{makeHex(line, 4)}] = 0xea; // NOP")
+            line += 1
         elif x[0].lower() == "pha":
             finalProgram.append(f"rom[{makeHex(line, 4)}] = 0x48; // PHA")
             line += 1
