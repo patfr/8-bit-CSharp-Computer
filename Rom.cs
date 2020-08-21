@@ -14,7 +14,8 @@ namespace system
             {
                 rom[i] = 0x03; // EXT
             }
-
+            
+            // program starts here
             rom[0x0000] = 0xa9; // LDA 0x02
             rom[0x0001] = 0x02;
             rom[0x0002] = 0x8d; // STA 0x0000
@@ -42,8 +43,9 @@ namespace system
             rom[0x0018] = 0x6c; // JMP 0x8007
             rom[0x0019] = 0x07;
             rom[0x001a] = 0x80;
+            // program ends here
 
-            // start
+            // start of program in memory change with caution
             rom[0x7ffc] = 0x00;
             rom[0x7ffd] = 0x80;
         }
