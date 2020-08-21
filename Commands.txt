@@ -13,6 +13,8 @@ CLC      1    Clears the carry bit.
 
 EXT      1    Exit the program.
 
+INC      3    Increments the value in ram at the given address.
+
 JMP      3    Jumps to the given label (A label is a string of more than 3 chars).
 
 LDA      2    Sets the A register to the value of the next byte.
@@ -36,20 +38,22 @@ Command Syntax:
 Name   Syntax
 ADC    ["ADC", {"0x0000"}]
 
-BVS    ["BVS", {""}]
+BVS    ["BVS", {"0x0000"}]
 
 CLC    ["CLC"]
 
 EXT    ["EXT"]
 
+INC    ["INC", {"0x0000"}]
+
 JMP    ["JMP", *"name of label"*]
 
 Labels [*"name"*]
 LDA    ["LDA", ("I0x00")]
-LDA    ["LDA", ("A0x0000")]
+LDA    ["LDA", {"A0x0000"}]
 
 PHA    ["PHA"]
 PLA    ["PLA"]
 PRA    ["PRA"]
 
-STA    ["STA", "0x0000"]
+STA    ["STA", {"0x0000"}]
