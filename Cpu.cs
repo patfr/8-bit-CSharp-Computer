@@ -41,37 +41,43 @@ namespace system
                 switch (rom.read(PC))
                 {
                     case 0x03:
-                        EXT_Implied();
+                        EXT();
                         break;
                     case 0x13:
                         PRA();
                         break;
                     case 0x18:
-                        CLC_Implied();
+                        CLC();
                         break;
                     case 0x48:
-                        PHA_Implied();
+                        PHA();
                         break;
                     case 0x68:
-                        PLA_Implied();
+                        PLA();
                         break;
                     case 0x6c:
-                        JMP_Indirect();
+                        JMP();
                         break;
                     case 0x6d:
-                        ADC_ABS();
+                        ADC();
                         break;
                     case 0x70:
-                        BVS_Relative();
+                        BVS();
                         break;
                     case 0x8d:
-                        STA_ABS();
+                        STA();
                         break;
                     case 0xa9:
                         LDA_IMM();
                         break;
                     case 0xad:
                         LDA_ABS();
+                        break;
+                    case 0xea:
+                        NOP();
+                        break;
+                    case 0xee:
+                        INC();
                         break;
                     default:
                         PC += 1;
@@ -80,7 +86,7 @@ namespace system
             }
         }
 
-        public void ADC_ABS()
+        public void ADC()
         {
             int add1 = rom.read((ushort)(PC + 1));
             int add2 = rom.read((ushort)(PC + 2)) * 256 + add1;
@@ -100,7 +106,7 @@ namespace system
             PC += 0x3;
         }
 
-        public void BVS_Relative()
+        public void BVS()
         {
             if (V == 0x1)
             {
@@ -114,22 +120,37 @@ namespace system
             }
         }
 
-        public void CLC_Implied()
+        public void CLC()
         {
             C = 0x0;
             PC += 0x1;
         }
 
-        public void EXT_Implied()
+        public void EXT()
         {
             System.Environment.Exit(0);
         }
 
-        public void JMP_Indirect()
+        public void INC()
         {
-            int add3 = rom.read((ushort)(PC + 1));
-            int add4 = rom.read((ushort)(PC + 2)) * 256 + add3;
-            PC = (ushort)(add4);
+            int add1 = rom.read((ushort)(PC + 1));
+            int add2 = rom.read((ushort)(PC + 2)) * 256 + add1;
+            byte value = ram.read((ushort)(add2));
+            byte normal = value;
+            value += 1;
+            if (value < normal)
+            {
+                V = 0x1;
+            }
+            ram.write((ushort)(add2), value);
+            PC += 3;
+        }
+
+        public void JMP()
+        {
+            int add1 = rom.read((ushort)(PC + 1));
+            int add2 = rom.read((ushort)(PC + 2)) * 256 + add1;
+            PC = (ushort)(add2);
         }
 
         public void LDA_ABS()
@@ -146,14 +167,19 @@ namespace system
             PC += 0x2;
         }
 
-        public void PHA_Implied()
+        public void NOP()
+        {
+            PC += 0x1;
+        }
+
+        public void PHA()
         {
             stack.push(S, (ushort)(A));
             S += 1;
             PC += 0x1;
         }
 
-        public void PLA_Implied()
+        public void PLA()
         {
             S -= 1;
             A = (byte)(stack.pull(S));
@@ -166,7 +192,7 @@ namespace system
             PC += 0x1;
         }
 
-        public void STA_ABS()
+        public void STA()
         {
             int add1 = rom.read((ushort)(PC + 1));
             int add2 = rom.read((ushort)(PC + 2)) * 256 + add1;
