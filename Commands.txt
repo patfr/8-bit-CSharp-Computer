@@ -5,7 +5,7 @@ Command list:
 --for how to write them go to the next list in this file
 
 Name   Bytes  Description
-ADC      3    Adds whatever is in the given address to the A register.
+ADC      3    Adds whatever is in the given address to the A register. (Can change the Carry and Overflow bit)
 
 BVS      3    Jumps to the given address if Overflow bit is set.
 
