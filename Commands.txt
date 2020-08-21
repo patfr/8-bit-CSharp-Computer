@@ -1,0 +1,55 @@
+This file shows what commands you can insert into the compiler.
+If commands show up multiple times it is because there's different modes for them.
+
+Command list:
+--for how to write them go to the next list in this file
+
+Name   Bytes  Description
+ADC      3    Adds whatever is in the given address to the A register.
+
+BVS      3    Jumps to the given address if Overflow bit is set.
+
+CLC      1    Clears the carry bit.
+
+EXT      1    Exit the program.
+
+JMP      3    Jumps to the given label (A label is a string of more than 3 chars).
+
+LDA      2    Sets the A register to the value of the next byte.
+LDA      3    Sets the A register to a value in Ram at the given address.
+
+PHA      1    Pushes the value of the A register to the Stack.
+PLA      1    Pulls a value from the Stack and sets to A register to it.
+PRA      1    Prints the value of the A register to the console.
+
+STA      3    Store the value of the A register at the given address.
+
+{} means the string inside has to be an address (has to be a Hex number).
+() means the string inside has to be a byte (has to be a Hex number).
+** means the string inside has to be longer than 3 characters but can be anything.
+
+Some commands have an A or an I infront of the address or byte number this tells the program which version of the command to use. You have to use the letter
+when it says it in the syntax.
+
+Command Syntax:
+
+Name   Syntax
+ADC    ["ADC", {"0x0000"}]
+
+BVS    ["BVS", {""}]
+
+CLC    ["CLC"]
+
+EXT    ["EXT"]
+
+JMP    ["JMP", *"name of label"*]
+
+Labels [*"name"*]
+LDA    ["LDA", ("I0x00")]
+LDA    ["LDA", ("A0x0000")]
+
+PHA    ["PHA"]
+PLA    ["PLA"]
+PRA    ["PRA"]
+
+STA    ["STA", "0x0000"]
